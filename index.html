@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>💗</title>
+
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  background: #ffd6e7;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+}
+
+/* CONTADOR */
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+  z-index: 2;
+  animation: fadeIn 2s ease;
+}
+
+#timer {
+  font-size: 3rem;
+  font-weight: bold;
+  animation: pulse 2s infinite;
+}
+
+/* ANIMACIONES */
+@keyframes fadeIn {
+  from {opacity: 0; transform: translate(-50%, -60%);}
+  to {opacity: 1; transform: translate(-50%, -50%);}
+}
+
+@keyframes pulse {
+  0% {transform: scale(1);}
+  50% {transform: scale(1.05);}
+  100% {transform: scale(1);}
+}
+
+/* BOTÓN */
+button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  background: white;
+  color: #ff4d88;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* IMÁGENES */
+.img {
+  position: absolute;
+  width: 170px;
+  border-radius: 15px;
+  opacity: 0.9;
+}
+
+.img1 { top: 5%; left: 5%; }
+.img2 { top: 10%; right: 5%; }
+.img3 { bottom: 10%; left: 10%; }
+.img4 { bottom: 5%; right: 10%; }
+
+/* CORAZONES */
+.heart {
+  position: absolute;
+  color: #ff4d88;
+  font-size: 20px;
+  animation: float 5s linear infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-800px);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="center">
+  <h1>Desde que empezó todo 💗</h1>
+  <div id="timer"></div>
+  <button onclick="toggleMusic()">🎵 Play / Pause</button>
+</div>
+
+<img src="foto1.jpg" class="img img1">
+<img src="foto2.jpg" class="img img2">
+<img src="foto3.jpg" class="img img3">
+<img src="foto4.jpg" class="img img4">
+
+<audio id="music" loop>
+  <source src="musica.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// FECHA
+const startDate = new Date("2025-06-05T00:00:00");
+
+// CONTADOR
+function updateTimer() {
+  const now = new Date();
+  const diff = now - startDate;
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((diff / (1000 * 60)) % 60);
+  const seconds = Math.floor((diff / 1000) % 60);
+
+  document.getElementById("timer").innerText =
+    `${days} días ${hours}h ${minutes}m ${seconds}s`;
+}
+
+setInterval(updateTimer, 1000);
+
+// MÚSICA
+const music = document.getElementById("music");
+
+function toggleMusic() {
+  if (music.paused) {
+    music.play();
+  } else {
+    music.pause();
+  }
+}
+
+// CORAZONES
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerText = "💗";
+
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+
+  document.body.appendChild(heart);
+
+  setTimeout(() => {
+    heart.remove();
+  }, 5000);
+}
+
+setInterval(createHeart, 300);
+</script>
+
+</body>
+</html>
